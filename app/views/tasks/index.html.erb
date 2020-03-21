@@ -1,0 +1,77 @@
+<div class="wrapper mt-3">
+
+  <h1 class="text-center">TODO's list</h1>
+  <!-- タスクを新規作成するform -->
+
+  <div class="centerContainer">
+    <h4>Create new task: </h4>
+    <form class="newTask" method="POST" action="/tasks">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <div class="form-group">
+        <label for="task">Task Name: </label>
+        <input id="task" class="form-control" name="task" type="text" required>
+      </div>
+      <div class="form-group">
+        <label>Task State: </label>
+        <select name="state">
+          <% @status.each_with_index do |s,i| %>
+            <option value="<%= s %>"><%= s %></option>
+          <% end %>
+        </select>
+      </div>
+      <div class="form-group"">
+        <label>Task Limit Day: </label>
+        <input type="date" name="limit_date" required>
+      </div>
+      <div class="text-center form-group">
+        <p>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </p>
+      </div>
+    </form>
+  </div>
+
+  <!-- flashメッセージを表示 -->
+  <% flash.each do |type, msg| %>
+    <div class="alert alert-info">
+      <p class="text-center"><%= msg%></p>
+    </div>
+  <% end %>
+
+  <!-- タスクの一覧 -->
+  <div class="centerContainer">
+    <h4>Current tasks: </h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">State</th>
+          <th scope="col">Limit</th>
+          <th scope="col">Task</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tasks.each do |t| %>
+        <tr scope="row">
+          <td><%= t.state %></td>
+          <td><%= t.limit_date %></td>
+          <td><%= t.task %></td>
+          <td>
+            <button type="button" class="btn btn-success">complete</button>
+          </td>
+          <td>
+            <a href="/tasks/<%= t.id %>"><button type="button" class="btn btn-warning">edit</button></a>
+          </td>
+          <td>
+            <form method="POST" action="/tasks/<%= t.id %>">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+              <button type="submit" class="btn btn-danger">delete</button>
+            </form>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+</div>

@@ -1,0 +1,27 @@
+<div class="centerContainer mt-3">
+  <form method="POST" action="/tasks/<%= @task.id %>">
+    <h4>Update task: </h4>
+    <input type="hidden" name="_method" value="PUT">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <div class="form-group">
+      <label for="task">Task Name: </label>
+      <input value="<%= @task.task %>" id="task"  class="form-control" name="task" type="text" required>
+    </div>
+    <div class="form-group">
+      <label>Task State: </label>
+      <select name="state">
+        <% @status.each_with_index do |s,i| %>
+        <option value="<%= s %>"><%= s %></option>
+        <% end %>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Task Limit Day: </label>
+      <input type="date" name="limit_date" required>
+    </div>
+    <div class="text-center form-group">
+      <p>
+        <button type="submit" class="btn btn-primary">update</button>
+      </p>
+    </div>
+</div>
