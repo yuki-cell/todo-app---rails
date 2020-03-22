@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   get    'tasks/:id' => 'tasks#show'
   put    'tasks/:id' => 'tasks#update'
   delete 'tasks/:id' => 'tasks#destroy'
+  put '/tasks/:id/done' => 'tasks#done'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

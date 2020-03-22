@@ -18,7 +18,7 @@ class TasksController < ApplicationController
 
   def update
     id   = params[:id]
-    task = Task.find(1)
+    task = Task.find(id)
 
     task.task         = params[:task]
     task.state        = params[:state]
@@ -26,6 +26,15 @@ class TasksController < ApplicationController
     task.save
 
     redirect_to '/tasks', notice: 'タスクを更新しました。'
+  end
+
+  def done
+    id = params[:id]
+    task = Task.find(id)
+    task.state = "done"
+    task.save
+
+    redirect_to '/tasks', notice: 'タスクを完了しました'
   end
 
   def destroy

@@ -57,9 +57,18 @@
         <tr scope="row">
           <td><%= t.state %></td>
           <td><%= t.limit_date %></td>
-          <td><%= t.task %></td>
+          <% if t.state == "done"%>
+            <td><s><%= t.task %></s></td>
+          <% else %>
+            <td><%= t.task %></td>
+          <% end %>
           <td>
-            <button type="button" class="btn btn-success">complete</button>
+            <form method="POST" action="/tasks/<%= t.id %>/done">
+              <input type="hidden" name="_method" value="PUT">
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+              <button type="submit" class="btn btn-success">complete</button>
+            </form>
+
           </td>
           <td>
             <a href="/tasks/<%= t.id %>"><button type="button" class="btn btn-warning">edit</button></a>
@@ -74,4 +83,9 @@
         </tr>
         <% end %>
       </tbody>
+    </div>
+
+    <p id="output">hello, world</p>
+
+
 </div>
